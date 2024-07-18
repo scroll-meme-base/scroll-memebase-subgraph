@@ -1,0 +1,8 @@
+{
+  "scroll-sepolia": {
+    "poolCoreContract": {
+      "address": "0xA7DB94de733DE870A2B4fc9d28e4fE249b9010b6",
+      "startBlock": 5357454
+    }
+  }
+}

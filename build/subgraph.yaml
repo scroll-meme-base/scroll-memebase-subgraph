@@ -1,0 +1,111 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: poolCoreContract
+    network: scroll-sepolia
+    source:
+      address: "0xA7DB94de733DE870A2B4fc9d28e4fE249b9010b6"
+      abi: poolCoreContract
+      startBlock: 5357454
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Initialized
+        - OwnershipTransferred
+        - PoolCreated
+        - Stake
+        - Unstake
+        - Upgraded
+      abis:
+        - name: poolCoreContract
+          file: poolCoreContract/abis/poolCoreContract.json
+      eventHandlers:
+        - event: Initialized(uint64)
+          handler: handleInitialized
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: PoolCreated(uint256,string,string,uint256,address,uint256,bool,uint256,uint256,uint256)
+          handler: handlePoolCreated
+        - event: Stake(address,uint256,uint256,uint256,uint256)
+          handler: handleStake
+        - event: Unstake(address,uint256,uint256,uint256)
+          handler: handleUnstake
+        - event: Upgraded(indexed address)
+          handler: handleUpgraded
+      file: poolCoreContract/poolCoreContract.wasm
+  - kind: ethereum
+    name: poolPeripheryContract
+    network: scroll-sepolia
+    source:
+      address: "0x702b301061eED398E9956BCCce463F1BAf3184e0"
+      abi: poolPeripheryContract
+      startBlock: 5357520
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Claim
+        - Initialized
+        - OwnershipTransferred
+        - TokenDeployed
+        - Upgraded
+      abis:
+        - name: poolPeripheryContract
+          file: poolPeripheryContract/abis/poolPeripheryContract.json
+      eventHandlers:
+        - event: Claim(address,uint256,uint256)
+          handler: handleClaim
+        - event: Initialized(uint64)
+          handler: handleInitialized
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: TokenDeployed(uint256,address)
+          handler: handleTokenDeployed
+        - event: Upgraded(indexed address)
+          handler: handleUpgraded
+      file: poolPeripheryContract/poolPeripheryContract.wasm
+  - kind: ethereum
+    name: voteContract
+    network: scroll-sepolia
+    source:
+      address: "0xdc9e2f919Bfa1eBa5f225Ee4BE2F4144dbD94943"
+      abi: voteContract
+      startBlock: 5357300
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Initialized
+        - OwnershipTransferred
+        - ProposalCreated
+        - ProposalExecuted
+        - TopicStarted
+        - Upgraded
+        - VoteCast
+      abis:
+        - name: voteContract
+          file: voteContract/abis/voteContract.json
+      eventHandlers:
+        - event: Initialized(uint64)
+          handler: handleInitialized
+        - event: OwnershipTransferred(indexed address,indexed address)
+          handler: handleOwnershipTransferred
+        - event: ProposalCreated((uint256,uint256,string,string,uint256,uint256,uint256,uint256,uint256,uint256,address,bool))
+          handler: handleProposalCreated
+        - event: ProposalExecuted(uint256,uint256,uint256)
+          handler: handleProposalExecuted
+        - event: TopicStarted(uint256,string,uint256,address)
+          handler: handleTopicStarted
+        - event: Upgraded(indexed address)
+          handler: handleUpgraded
+        - event: VoteCast(address,uint256)
+          handler: handleVoteCast
+      file: voteContract/voteContract.wasm
